@@ -11,5 +11,18 @@ namespace GymMangmentDAL.Entities
         // JoinDate in this class is the same as the CreatedAt in the BaseEntity
 
         public string? Photo  { get; set; }
+
+        #region Relationships
+
+        #region Member- HealthRecord (1-1)
+        public HealthRecord HealthRecord { get; set; }= null!;
+        #endregion
+        #region Member- MemberShip (1-M)
+        public ICollection<MemberShip> MemberShips { get; set; } = null!;
+        #endregion
+        #region Member- MemberSession (1-M)
+        public ICollection<MemberSession> MemberSessions { get; set; } = null!;
+        #endregion
+        #endregion
     }
 }

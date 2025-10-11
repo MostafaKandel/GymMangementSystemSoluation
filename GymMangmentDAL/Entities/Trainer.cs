@@ -13,5 +13,11 @@ namespace GymMangmentDAL.Entities
 
         public Specialties Specialties { get; set; }
 
+        #region Relationships
+        #region Trainer- Session (1-M)
+        public ICollection<Session> TrainerSessions { get; set; } = null!;
+        #endregion
+        #endregion
+
     }
 }
