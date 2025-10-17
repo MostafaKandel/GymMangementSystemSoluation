@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GymMangmentDAL.Entities
 {
-    internal class Trainer: GymUser
+   public class Trainer: GymUser
     {
         // HireDate in this class is the same as the CreatedAt in the BaseEntity
 

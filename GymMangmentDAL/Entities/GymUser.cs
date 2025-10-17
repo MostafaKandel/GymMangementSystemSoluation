@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GymMangmentDAL.Entities
 {
-    internal class GymUser: BaseEntity
+    public class GymUser: BaseEntity
     {
         public string Name { get; set; } = null!;
         public string Email { get; set; }= null!;
@@ -28,7 +28,7 @@ namespace GymMangmentDAL.Entities
     [Owned]
     // here for clean code it is better to create a new class for address in another file, but the address class
     // is used only in the GymUser class so I put it here
-    class Address
+   public  class Address
     {
         public int BuildingNumber { get; set; }
         public string Street { get; set; } = null!;

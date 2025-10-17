@@ -22,7 +22,7 @@ namespace GymMangmentDAL.Data.Configurations
                .HasMaxLength(200);
 
             builder.Property(X => X.Price)
-                .HasPrecision(10,21);
+                .HasPrecision(10,2);
 
             builder.ToTable(Tb =>
             {

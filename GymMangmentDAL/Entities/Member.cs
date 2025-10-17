@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymMangmentDAL.Entities
 {
-    internal class Member: GymUser
+    public class Member: GymUser
     {
         // JoinDate in this class is the same as the CreatedAt in the BaseEntity
 
