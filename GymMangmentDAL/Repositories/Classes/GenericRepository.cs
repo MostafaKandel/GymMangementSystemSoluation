@@ -1,6 +1,7 @@
 ﻿using GymMangmentDAL.Data.Context;
 using GymMangmentDAL.Entities;
 using GymMangmentDAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GymMangmentDAL.Repositories.Classes
 {
-    internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity, new()
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity, new()
     {
         private readonly GymDbContext _dbContext;
         public GenericRepository(GymDbContext dbContext)
@@ -31,9 +32,16 @@ namespace GymMangmentDAL.Repositories.Classes
 
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll(Func<TEntity,bool>? condition=null)
         {
-            return _dbContext.Set<TEntity>().ToList();
+            if (condition == null)
+            {
+                return _dbContext.Set<TEntity>().AsNoTracking().ToList();
+            }
+            else
+            {
+                return _dbContext.Set<TEntity>().AsNoTracking().Where(condition).ToList();
+            }
 
         }
 

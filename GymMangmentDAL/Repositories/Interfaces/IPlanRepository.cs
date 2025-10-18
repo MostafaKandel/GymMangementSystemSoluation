@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GymMangmentDAL.Repositories.Interfaces
 {
-    internal interface IPlanRepository
+    public interface IPlanRepository
     {
         IEnumerable<Plan> GetAll();
         Plan? GetById(int id);
