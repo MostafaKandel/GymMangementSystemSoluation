@@ -1,4 +1,5 @@
 using GymMangmentDAL.Data.Context;
+using GymMangmentDAL.Data.DataSeed;
 using GymMangmentDAL.Entities;
 using GymMangmentDAL.Repositories.Classes;
 using GymMangmentDAL.Repositories.Interfaces;
@@ -24,6 +25,18 @@ namespace GymMangementPL
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
+
+            #region Seed Data - Migrate Database
+
+            using var Scoped = app.Services.CreateScope();
+            var dbContext= Scoped.ServiceProvider.GetRequiredService<GymDbContext>();
+
+            var PendingMigrations= dbContext.Database.GetPendingMigrations();
+            if(PendingMigrations?.Any() ?? false)
+                dbContext.Database.Migrate();
+            GymDbContextDataSeeding.SeedData(dbContext);
+
+            #endregion
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
