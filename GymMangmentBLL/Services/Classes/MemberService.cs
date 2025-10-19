@@ -240,6 +240,8 @@ namespace GymMangmentBLL.Services.Classes
         {
             return _unitOfWork.GetRepository<Member>().GetAll(m => m.Phone == phone).Any();
         }
+
+       
         #endregion
     }
 }
