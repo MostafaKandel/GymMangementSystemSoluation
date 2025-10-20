@@ -13,12 +13,17 @@ namespace GymMangmentDAL.Repositories.Classes
     {
         private readonly GymDbContext _dbContext;
 
-        public UnitOfWork(GymDbContext dbContext) {
-           _dbContext = dbContext;
+        public UnitOfWork(GymDbContext dbContext, ISessionRepository sessionRepository  )
+        {
+            _dbContext = dbContext;
+            SessionRepository = sessionRepository;
         }
         // this for save all repository which i need before GetRepository called
         // key: Member, trainer,...    value: GenericRepository<Member>, GenericRepository<Trainer>, ....
         private readonly Dictionary<Type, object> _repositores= new();
+
+        public ISessionRepository SessionRepository { get; }
+
         public IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : BaseEntity, new()
         {
             var EntityType= typeof(TEntity);
