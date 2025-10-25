@@ -16,7 +16,7 @@ namespace GymMangementPL.Controllers
         public ActionResult Index()
         {
             var members = _memberService.GetAllMembers();
-            Console.WriteLine(members);
+          
             return View(members);
         }
         #endregion

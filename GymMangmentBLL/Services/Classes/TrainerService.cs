@@ -1,4 +1,5 @@
-﻿using GymMangmentBLL.Services.Interfaces;
+﻿using AutoMapper.Execution;
+using GymMangmentBLL.Services.Interfaces;
 using GymMangmentBLL.ViewModels.TrainerViewModel;
 using GymMangmentDAL.Entities;
 using GymMangmentDAL.Repositories.Interfaces;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GymMangmentBLL.Services.Classes
 {
-    internal class TrainerService : ITrainerService
+    public class TrainerService : ITrainerService
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -64,7 +65,7 @@ namespace GymMangmentBLL.Services.Classes
                 Name = t.Name,
                 Email = t.Email,
                 Phone = t.Phone,
-                Specialization = t.Specialties.ToString(),
+                Specialities = t.Specialties.ToString(),
                 Id = t.Id,
 
             });
@@ -81,7 +82,7 @@ namespace GymMangmentBLL.Services.Classes
                 Name = trainer.Name,
                 Email = trainer.Email,
                 Phone = trainer.Phone,
-                Specialization = trainer.Specialties.ToString(),
+                Specialities = trainer.Specialties.ToString(),
                 DateOfBirth = trainer.DateOfBirth.ToString("yyyy/MM/dd"),
                 Address = trainer.Address != null ? $"{trainer.Address.BuildingNumber}, {trainer.Address.Street}, {trainer.Address.City}" : null
             };
@@ -126,17 +127,21 @@ namespace GymMangmentBLL.Services.Classes
 
         }
 
-        public bool UpdateTrainerDetails(UpdateTrainerViewModel updatedTrainer, int trainerId)
+        public bool UpdateTrainerDetails(TrainerToUpdateViewModel updatedTrainer, int trainerId)
         {
             var repo = _unitOfWork.GetRepository<Trainer>();
             var TrainerToUpdate = repo.GetById(trainerId);
-            if (TrainerToUpdate is null || IsEmailExists(updatedTrainer.Email)|| IsPhoneExists(updatedTrainer.Phone)) return false;
+            var emailExit = _unitOfWork.GetRepository<Trainer>()
+                    .GetAll(x => x.Email == updatedTrainer.Email && x.Id != trainerId).Any();
+            var phoneExit = _unitOfWork.GetRepository<Trainer>()
+                .GetAll(x => x.Phone == updatedTrainer.Phone && x.Id != trainerId).Any();
+            if (TrainerToUpdate is null || emailExit|| phoneExit) return false;
 
           
             TrainerToUpdate.Email = updatedTrainer.Email;
             TrainerToUpdate.Phone = updatedTrainer.Phone;
             TrainerToUpdate.Name = updatedTrainer.Name;
-            TrainerToUpdate.Specialties = updatedTrainer.Specialties;
+            TrainerToUpdate.Specialties = updatedTrainer.Specialities;
             TrainerToUpdate.Address.BuildingNumber = updatedTrainer.BuildingNumber;
             TrainerToUpdate.Address.Street = updatedTrainer.Street;
             TrainerToUpdate.Address.City = updatedTrainer.City;

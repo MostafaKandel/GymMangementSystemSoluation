@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GymMangmentBLL.ViewModels.TrainerViewModel
 {
-    internal class TrainerToUpdateViewModel
+   public class TrainerToUpdateViewModel
     {
         public string Name { get; set; } = null!;
         [Required(ErrorMessage = "Email is Required")]
@@ -37,7 +37,7 @@ namespace GymMangmentBLL.ViewModels.TrainerViewModel
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "City can only contain letters and spaces.")]
         public string City { get; set; } = null!;
 
-        [Required(ErrorMessage = "Specialization is Required")]
+        [Required(ErrorMessage = "Specialities is Required")]
         [EnumDataType(typeof(Specialties))]
         public  Specialties Specialities { get; set; } 
     }
