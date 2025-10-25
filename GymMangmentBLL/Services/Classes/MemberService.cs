@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace GymMangmentBLL.Services.Classes
 {
-    internal class MemberService : IMemberService
+   public class MemberService : IMemberService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -75,7 +75,7 @@ namespace GymMangmentBLL.Services.Classes
         public IEnumerable<MemberViewModel> GetAllMembers()
         {
             var Memebers =_unitOfWork.GetRepository<Member>().GetAll();
-            if (Memebers == null || Memebers.Any())
+            if (Memebers == null || !Memebers.Any())
             {
                 return [];
             }
@@ -191,10 +191,13 @@ namespace GymMangmentBLL.Services.Classes
         {
             try
             {
-               if (IsEmailExists(memberToUpdate.Email) || IsPhoneExists(memberToUpdate.Phone))
-                {
-                    return false;
-                }
+                var emailExit= _unitOfWork.GetRepository<Member>()
+                    .GetAll(x=> x.Email == memberToUpdate.Email && x.Id != MemberId).Any();
+                var phoneExit = _unitOfWork.GetRepository<Member>()
+                    .GetAll(x => x.Phone == memberToUpdate.Phone && x.Id != MemberId).Any();
+
+                if(emailExit || phoneExit) return false;
+
                 var member =_unitOfWork.GetRepository<Member>().GetById(MemberId);
                 if (member == null) return false;
 
