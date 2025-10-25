@@ -163,8 +163,10 @@ namespace GymMangmentBLL.Services.Classes
             {
                 var member =_unitOfWork.GetRepository<Member>().GetById(MemberId);
                 if (member == null) return false;
+
+                var SessionsIds= _unitOfWork.GetRepository<MemberSession>().GetAll(x=> x.MemberId == MemberId).Select(x=> x.SessionId);
                 // check if member active in session or not 
-                var HasActiveMemberSessions = _unitOfWork.GetRepository<MemberSession>().GetAll(X=>X.MemberId == MemberId && X.Session.StartDate> DateTime.Now).Any();
+                var HasActiveMemberSessions = _unitOfWork.GetRepository<Session>().GetAll(x=>SessionsIds.Contains(x.Id) && x.StartDate> DateTime.Now).Any();
                 if (HasActiveMemberSessions) return false;
 
                 var MemberShips= _unitOfWork.GetRepository<MemberShip>().GetAll(ms => ms.MemberId == MemberId);
