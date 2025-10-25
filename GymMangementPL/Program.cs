@@ -29,6 +29,7 @@ namespace GymMangementPL
             builder.Services.AddScoped<ISessionRepository, SessionRepository>();
             builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
             builder.Services.AddAutoMapper(x=> x.AddProfile(new MappingProfile()));
+            builder.Services.AddScoped<IMemberService, MemberService>();
 
             var app = builder.Build();
 
