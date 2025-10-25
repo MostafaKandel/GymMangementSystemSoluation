@@ -40,7 +40,7 @@ This means that the validation happens in the database, not just in your C# mode
             builder.ToTable(Tb =>
             {
                 Tb.HasCheckConstraint("GymUserValidEmailCheck", "Email Like '_%@_%._%'");
-                Tb.HasCheckConstraint("GymUserValidPhoneCheck", "Phone Like '01' and Phone Not Like '%[^0-9]%' ");
+                Tb.HasCheckConstraint("GymUserValidPhoneCheck", "Phone Like '01%' and Phone Not Like '%[^0-9]%' ");
             });
 
             // unique Non clustered index
