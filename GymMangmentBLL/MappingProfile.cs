@@ -16,9 +16,11 @@ namespace GymMangmentBLL
         {
           MapSession();
             MapMember();
+          
 
         }
 
+        
         private void MapSession()
         {
             CreateMap<Session, SessionViewModel>()
@@ -26,10 +28,15 @@ namespace GymMangmentBLL
              .ForMember(dest => dest.TrainerName, opt => opt.MapFrom(src => src.SessionTrainer.Name))
              .ForMember(dest => dest.AvilableSlots, opt => opt.Ignore());
 
-            CreateMap<CreateSessionViewModel, Session>();
+            CreateMap<CreateSessionViewModel, Session>().ReverseMap();
             CreateMap<Session, UpdateSessionViewModel>().ReverseMap();
+            CreateMap<Category, CategorySelectViewModel>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryName));
+            CreateMap<Trainer, TrainerSelectViewModel>();
+             
         }
-
+ 
+        
         private void MapMember()
         {
             CreateMap<CreateMemberViewModel, Member>()

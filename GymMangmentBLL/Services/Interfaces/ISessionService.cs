@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GymMangmentBLL.Services.Interfaces
 {
-    internal interface ISessionService
+    public interface ISessionService
     {
         IEnumerable<SessionViewModel> GetAllSessions();
         SessionViewModel? GetSessionById(int id);
@@ -19,6 +19,9 @@ namespace GymMangmentBLL.Services.Interfaces
         bool UpdateSession(  UpdateSessionViewModel updateSession, int id);
 
         bool RemoveSession(int id);
+
+        IEnumerable<TrainerSelectViewModel> GetAllTrainersForDropDown();
+        IEnumerable<CategorySelectViewModel> GetAllCategoriesForDropDown();
 
     }
 }

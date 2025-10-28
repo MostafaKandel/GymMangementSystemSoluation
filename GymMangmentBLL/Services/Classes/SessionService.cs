@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GymMangmentBLL.Services.Classes
 {
-    internal class SessionService : ISessionService
+   public class SessionService : ISessionService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -122,6 +122,20 @@ namespace GymMangmentBLL.Services.Classes
             catch { return false; }
 
         }
+        public IEnumerable<TrainerSelectViewModel> GetAllTrainersForDropDown()
+        {
+            var Trainers = _unitOfWork.GetRepository<Trainer>().GetAll();
+
+            return _mapper.Map<IEnumerable<Trainer>, IEnumerable<TrainerSelectViewModel>>(Trainers);
+
+        }
+
+        public IEnumerable<CategorySelectViewModel> GetAllCategoriesForDropDown()
+        {
+            var Categories = _unitOfWork.GetRepository<Category>().GetAll();
+            return _mapper.Map<IEnumerable<Category>, IEnumerable<CategorySelectViewModel>>(Categories);
+
+        }
 
 
         #region Helper
@@ -173,8 +187,6 @@ namespace GymMangmentBLL.Services.Classes
 
 
         }
-
-
 
         #endregion
     }
