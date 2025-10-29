@@ -10,7 +10,7 @@ namespace GymMangmentDAL.Entities
     {
         // JoinDate in this class is the same as the CreatedAt in the BaseEntity
 
-        public string? Photo  { get; set; }
+        public string Photo  { get; set; } = null!;
 
         #region Relationships
 
